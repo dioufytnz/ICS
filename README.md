@@ -11,4 +11,5 @@ DEPOT POUR LES SCRIPTS DEPLOYES CHEZ LE CLIENT "ICS"
 - JSON DATA TO SERVER
 {"ST":"%r","VR":"%a","SN":"%n","SR":"TBZDB1028689"}
 - I/O CONFIG
--- DI-01 to DI-04 : 8bit Integer /
+-- DI-01 to DI-04 : 8bit Integer / register 1 to 4
+-- AI-01 to AI-04 : 16bit Integer Unsigned / register 513 to 516
