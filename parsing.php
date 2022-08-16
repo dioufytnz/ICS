@@ -45,7 +45,6 @@ $DI2 = explode(";", $_POST["D2"]);
 $DI3 = explode(";", $_POST["D3"]);
 //$VS = explode(";", $_POST["VS"]);
 //$VS = str_replace(' ', '', $VS);
-$PA = explode(";", $_POST["PA"]);
 
 $file_pointer = "wago_".$ID[1];
 $file_pointer_old = "wago_".$ID[1]."_old";
