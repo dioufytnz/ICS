@@ -23,9 +23,10 @@ file_put_contents('datas_moxa.log', $entityBody."\n", FILE_APPEND);
 $table = json_decode($entityBody);
 
 //file_put_contents('datas_moxa.log', $table[0]->IP . ", " . $table[0]->ST . ", ".  $table[0]->VR[0] ."\n", FILE_APPEND);
-//ID
+//ID : nom forage
 $ID = $table[0]->SN;
-//SR
+$MAX_AI_SCALED_01 = $table[0]->MAX_AI_01;
+//SR : serial moxa
 $SR = $table[0]->SR;
 //DI-01
 $DI1 = $table[0]->VR[0];
@@ -44,72 +45,104 @@ $AI3 = $table[6]->VR[0];
 //AI-03
 $AI4 = $table[7]->VR[0];
 
+$file_pointer = "moxa_".$SR;
+$file_pointer_old = "moxa_".$SR."_old";
+$timestamp_uptime = time();
+
 ///////////////// CONVERSION DES DONNEES ANNALOGIQUES //////////////////////
 $DIVIDENDE = pow(2, 15);
 
 file_put_contents('datas_moxa.log', "DIVIDENDE => ".$DIVIDENDE."\n", FILE_APPEND);
 $MAX_RANGE_TENSION_10V = 10;
 $MAX_RANGE_COURANT_4_20 = 16;
-
-if ($AI1 < 32768 || $AI2 < 32768 || $AI3 < 32768)
+$MAX_AI_SCALED_01
+//FFFE -> 65534
+//3333 -> 13107
+if ($AI1 > 13107)
 {
-    $AI1 = $AI1 * ((($MAX_RANGE_COURANT_4_20 / 2) - 4)  / $DIVIDENDE);
+    $AI1 = $AI1 * $MAX_AI_SCALED_01 / 65534
     $AI1 = number_format($AI1,1);
-    file_put_contents('datas_moxa.log', "AI1 => ".$AI1."\n", FILE_APPEND);
-    if ($AI1 < 0)
-    {
-        $AI1 = 0;
-    }
-    $AI2 = $AI2 * ((($MAX_RANGE_COURANT_4_20 / 2) - 4)  / $DIVIDENDE);
-    $AI2 = number_format($AI2,1);
-    if ($AI2 < 0)
-    {
-        $AI2 = 0;
-    }
-    $AI3 = $AI3 * ((($MAX_RANGE_COURANT_4_20 / 2) - 4) / $DIVIDENDE);
-    $AI3 = number_format($AI3,1);
-    if ($AI3 < 0)
-    {
-        $AI3 = 0;
-    }
-    $AI4 = $AI4 * $MAX_RANGE_TENSION_10V / $DIVIDENDE;
-    $AI4 = number_format($AI4,1);
-    if ($AI4 < 0)
-    {
-        $AI4 = 0;
-    }
-} else {
-
-    $AI1 = $AI1 * ($MAX_RANGE_COURANT_4_20 / $DIVIDENDE) - ($MAX_RANGE_COURANT_4_20 - 1);
-    $AI1 = number_format($AI1,2);
-    if ($AI1 < 0)
-    {
-        $AI1 = 0;
-    }
-    $AI2 = $AI2 * ($MAX_RANGE_COURANT_4_20 / $DIVIDENDE) - ($MAX_RANGE_COURANT_4_20 - 1);
-    $AI2 = number_format($AI2,2);
-    if ($AI2 < 0)
-    {
-        $AI2 = 0;
-    }
-    $AI3 = $AI3 * ($MAX_RANGE_COURANT_4_20 / $DIVIDENDE) - ($MAX_RANGE_COURANT_4_20 - 1);
-    $AI3 = number_format($AI3,2);
-    if ($AI3 < 0)
-    {
-        $AI3 = 0;
-    }
-    $AI4 = $AI4 * $MAX_RANGE_TENSION_10V / $DIVIDENDE;
-    $AI4 = number_format($AI4,2);
-    if ($AI4 < 0)
-    {
-        $AI4 = 0;
-    }
+}else{
+    $AI1 = 0;
 }
-$file_pointer = "moxa_".$ID;
-$file_pointer_old = "moxa_".$ID."_old";
-//
-$file_pointer2 = "moxa_".$ID."_2";
-$file_pointer_old2 = "moxa_".$ID."_old_2";
+if ($AI2 > 13107)
+{
+    $AI2 = $AI2 * $MAX_AI_SCALED_02 / 65534
+    $AI2 = number_format($AI2,1);
+}else{
+    $AI2 = 0;
+}
+if ($AI3 > 13107)
+{
+    $AI3 = $AI3 * $MAX_AI_SCALED_03 / 65534
+    $AI3 = number_format($AI3,1);
+}else{
+    $AI3 = 0;
+}
+if ($AI4 > 13107)
+{
+    $AI4 = $AI4 * $MAX_AI_SCALED_04 / 65534
+    $AI4 = number_format($AI4,1);
+}else{
+    $AI4 = 0;
+}
+
+
+// if ($AI1 < 32768 || $AI2 < 32768 || $AI3 < 32768)
+// {
+//     $AI1 = $AI1 * ((($MAX_RANGE_COURANT_4_20 / 2) - 4)  / $DIVIDENDE);
+//     $AI1 = number_format($AI1,1);
+//     file_put_contents('datas_moxa.log', "AI1 => ".$AI1."\n", FILE_APPEND);
+//     if ($AI1 < 0)
+//     {
+//         $AI1 = 0;
+//     }
+//     $AI2 = $AI2 * ((($MAX_RANGE_COURANT_4_20 / 2) - 4)  / $DIVIDENDE);
+//     $AI2 = number_format($AI2,1);
+//     if ($AI2 < 0)
+//     {
+//         $AI2 = 0;
+//     }
+//     $AI3 = $AI3 * ((($MAX_RANGE_COURANT_4_20 / 2) - 4) / $DIVIDENDE);
+//     $AI3 = number_format($AI3,1);
+//     if ($AI3 < 0)
+//     {
+//         $AI3 = 0;
+//     }
+//     $AI4 = $AI4 * $MAX_RANGE_TENSION_10V / $DIVIDENDE;
+//     $AI4 = number_format($AI4,1);
+//     if ($AI4 < 0)
+//     {
+//         $AI4 = 0;
+//     }
+// } else {
+
+//     $AI1 = $AI1 * ($MAX_RANGE_COURANT_4_20 / $DIVIDENDE) - ($MAX_RANGE_COURANT_4_20 - 1);
+//     $AI1 = number_format($AI1,2);
+//     if ($AI1 < 0)
+//     {
+//         $AI1 = 0;
+//     }
+//     $AI2 = $AI2 * ($MAX_RANGE_COURANT_4_20 / $DIVIDENDE) - ($MAX_RANGE_COURANT_4_20 - 1);
+//     $AI2 = number_format($AI2,2);
+//     if ($AI2 < 0)
+//     {
+//         $AI2 = 0;
+//     }
+//     $AI3 = $AI3 * ($MAX_RANGE_COURANT_4_20 / $DIVIDENDE) - ($MAX_RANGE_COURANT_4_20 - 1);
+//     $AI3 = number_format($AI3,2);
+//     if ($AI3 < 0)
+//     {
+//         $AI3 = 0;
+//     }
+//     $AI4 = $AI4 * $MAX_RANGE_TENSION_10V / $DIVIDENDE;
+//     $AI4 = number_format($AI4,2);
+//     if ($AI4 < 0)
+//     {
+//         $AI4 = 0;
+//     }
+// }
+
 /////////////////////////////////////////////////////////////////////////
 
 file_put_contents('datas_moxa.log', "FORAGE ". $ID ." : ". $DI1 . ", ". $DI2 .", ".  $DI3 .", ". $DI4 . ", ". $AI1 . ", ". $AI2 . ", ". $AI3 .", ". $AI4 .", ". $SR ."\n", FILE_APPEND);
