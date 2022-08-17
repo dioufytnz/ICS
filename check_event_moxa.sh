@@ -30,6 +30,7 @@ if [ -f "/tmp/di0" ]; then
     if [ -f "/root/reboot" ]; then
         di0=$(cat /root/last_state_di0)
         if [ $di0_temp -ne $di0 ]; then
+            #/sbin/
             gpio.sh invert DOUT2
             rm -rf /root/reboot
         fi
