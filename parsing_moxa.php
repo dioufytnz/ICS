@@ -29,21 +29,56 @@ $MAX_AI_SCALED_01 = $table[0]->MAX_AI_01;
 //SR : serial moxa
 $SR = $table[0]->SR;
 //DI-01
-$DI1 = $table[0]->VR[0];
-//DI-02
-$DI2 = $table[1]->VR[0];
-//DI-03
-$DI3 = $table[2]->VR[0];
-//DI-04
-$DI4 = $table[3]->VR[0];
-//AI-00
-$AI1 = $table[4]->VR[0];
-//AI-01
-$AI2 = $table[5]->VR[0];
-//AI-02
-$AI3 = $table[6]->VR[0];
-//AI-03
-$AI4 = $table[7]->VR[0];
+$AI1 = $table[4]->VR;
+if(is_array($AI1)) {
+    $AI1 = $table[4]->VR[0];
+} else {
+    $AI1 = $table[4]->VR;
+}
+file_put_contents('datas_moxa.log', "AI1  before => ".$AI1."\n", FILE_APPEND);
+$AI2 = $table[5]->VR;
+if(is_array($AI2)) {
+    $AI2 = $table[5]->VR[0];
+} else {
+    $AI2 = $table[5]->VR;
+}
+$AI3 = $table[6]->VR;
+if(is_array($AI3)) {
+    $AI3 = $table[6]->VR[0];
+} else {
+    $AI3 = $table[6]->VR;
+}
+$AI4 = $table[7]->VR;
+if(is_array($AI4)) {
+    $AI4 = $table[7]->VR[0];
+} else {
+    $AI4 = $table[7]->VR;
+}
+$DI1 = $table[0]->VR;
+if(is_array($DI1)) {
+    $DI1 = $table[0]->VR[0];
+} else {
+    $DI1 = $table[0]->VR;
+}
+$DI2 = $table[1]->VR;
+if(is_array($DI2)) {
+    $DI2 = $table[0]->VR[0];
+} else {
+    $DI2 = $table[0]->VR;
+}
+$DI3 = $table[2]->VR;
+if(is_array($DI3)) {
+    $DI3 = $table[0]->VR[0];
+} else {
+    $DI3 = $table[0]->VR;
+}
+$DI4 = $table[3]->VR;
+if(is_array($DI4)) {
+    $DI4 = $table[0]->VR[0];
+} else {
+    $DI4 = $table[0]->VR;
+}
+
 
 $file_pointer = "moxa_".$SR;
 $file_pointer_old = "moxa_".$SR."_old";
@@ -85,62 +120,6 @@ if ($AI4 > 13107)
 }else{
     $AI4 = 0;
 }
-
-
-// if ($AI1 < 32768 || $AI2 < 32768 || $AI3 < 32768)
-// {
-//     $AI1 = $AI1 * ((($MAX_RANGE_COURANT_4_20 / 2) - 4)  / $DIVIDENDE);
-//     $AI1 = number_format($AI1,1);
-//     file_put_contents('datas_moxa.log', "AI1 => ".$AI1."\n", FILE_APPEND);
-//     if ($AI1 < 0)
-//     {
-//         $AI1 = 0;
-//     }
-//     $AI2 = $AI2 * ((($MAX_RANGE_COURANT_4_20 / 2) - 4)  / $DIVIDENDE);
-//     $AI2 = number_format($AI2,1);
-//     if ($AI2 < 0)
-//     {
-//         $AI2 = 0;
-//     }
-//     $AI3 = $AI3 * ((($MAX_RANGE_COURANT_4_20 / 2) - 4) / $DIVIDENDE);
-//     $AI3 = number_format($AI3,1);
-//     if ($AI3 < 0)
-//     {
-//         $AI3 = 0;
-//     }
-//     $AI4 = $AI4 * $MAX_RANGE_TENSION_10V / $DIVIDENDE;
-//     $AI4 = number_format($AI4,1);
-//     if ($AI4 < 0)
-//     {
-//         $AI4 = 0;
-//     }
-// } else {
-
-//     $AI1 = $AI1 * ($MAX_RANGE_COURANT_4_20 / $DIVIDENDE) - ($MAX_RANGE_COURANT_4_20 - 1);
-//     $AI1 = number_format($AI1,2);
-//     if ($AI1 < 0)
-//     {
-//         $AI1 = 0;
-//     }
-//     $AI2 = $AI2 * ($MAX_RANGE_COURANT_4_20 / $DIVIDENDE) - ($MAX_RANGE_COURANT_4_20 - 1);
-//     $AI2 = number_format($AI2,2);
-//     if ($AI2 < 0)
-//     {
-//         $AI2 = 0;
-//     }
-//     $AI3 = $AI3 * ($MAX_RANGE_COURANT_4_20 / $DIVIDENDE) - ($MAX_RANGE_COURANT_4_20 - 1);
-//     $AI3 = number_format($AI3,2);
-//     if ($AI3 < 0)
-//     {
-//         $AI3 = 0;
-//     }
-//     $AI4 = $AI4 * $MAX_RANGE_TENSION_10V / $DIVIDENDE;
-//     $AI4 = number_format($AI4,2);
-//     if ($AI4 < 0)
-//     {
-//         $AI4 = 0;
-//     }
-// }
 
 /////////////////////////////////////////////////////////////////////////
 
