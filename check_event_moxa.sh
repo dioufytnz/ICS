@@ -31,7 +31,10 @@ if [ -f "/tmp/di0" ]; then
         di0=$(cat /root/last_state_di0)
         if [ $di0_temp -ne $di0 ]; then
             #/sbin/
-            gpio.sh invert DOUT2
+            #gpio.sh invert DOUT2
+            if [ $di0 == 0 ]; then
+                ubus call ioman.relay.relay0 update '{"state":"closed"}'
+            fi
             rm -rf /root/reboot
         fi
         echo $di0_temp > /root/last_state_di0
