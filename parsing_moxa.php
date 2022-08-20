@@ -55,33 +55,32 @@ $DIVIDENDE = pow(2, 15);
 file_put_contents('datas_moxa.log', "DIVIDENDE => ".$DIVIDENDE."\n", FILE_APPEND);
 $MAX_RANGE_TENSION_10V = 10;
 $MAX_RANGE_COURANT_4_20 = 16;
-$MAX_AI_SCALED_01
 //FFFE -> 65534
 //3333 -> 13107
 if ($AI1 > 13107)
 {
-    $AI1 = $AI1 * $MAX_AI_SCALED_01 / 65534
+    $AI1 = $AI1 * $MAX_AI_SCALED_01 / 65534;
     $AI1 = number_format($AI1,1);
 }else{
     $AI1 = 0;
 }
 if ($AI2 > 13107)
 {
-    $AI2 = $AI2 * $MAX_AI_SCALED_02 / 65534
+    $AI2 = $AI2 * $MAX_AI_SCALED_02 / 65534;
     $AI2 = number_format($AI2,1);
 }else{
     $AI2 = 0;
 }
 if ($AI3 > 13107)
 {
-    $AI3 = $AI3 * $MAX_AI_SCALED_03 / 65534
+    $AI3 = $AI3 * $MAX_AI_SCALED_03 / 65534;
     $AI3 = number_format($AI3,1);
 }else{
     $AI3 = 0;
 }
 if ($AI4 > 13107)
 {
-    $AI4 = $AI4 * $MAX_AI_SCALED_04 / 65534
+    $AI4 = $AI4 * $MAX_AI_SCALED_04 / 65534;
     $AI4 = number_format($AI4,1);
 }else{
     $AI4 = 0;
